@@ -1,0 +1,4 @@
+repository "TBS Prototype@pashagrigorenko@cloud"
+  path "/"
+    br "/main"
+    co "/main"
