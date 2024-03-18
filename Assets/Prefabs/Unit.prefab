@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4905215556827939967}
-  - component: {fileID: 2110853054376098373}
   - component: {fileID: -7953677471847240423}
+  - component: {fileID: 2110853054376098373}
+  - component: {fileID: 5904367957423146328}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -35,20 +36,6 @@ Transform:
   - {fileID: 662392614074588082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2110853054376098373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547655569608270724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7425b1ea711a13f4b8a85a5daa626c61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitAnimator: {fileID: 1308563084388197765}
-  rotationSpeed: 20
 --- !u!65 &-7953677471847240423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70,6 +57,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6451529, y: 1.8188777, z: 0.65507877}
   m_Center: {x: 0, y: 0.895803, z: -0.028536618}
+--- !u!114 &2110853054376098373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547655569608270724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7425b1ea711a13f4b8a85a5daa626c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitAnimator: {fileID: 1308563084388197765}
+--- !u!114 &5904367957423146328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547655569608270724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ede7751b98a8074fa03b6f98982d6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitAnimator: {fileID: 1308563084388197765}
+  rotationSpeed: 10
 --- !u!1 &3852358577287233429
 GameObject:
   m_ObjectHideFlags: 0
