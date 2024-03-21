@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,9 @@ public class LevelGrid : MonoBehaviour
         GridObject gridObject = gridSystem.GetGridObject(pos);
         return gridObject.HasAnyUnit();
     }
-    
+    public Tuple<int,int> GetGridSize()=>gridSystem.GetGridSize();
+    public int GetWidth()=> gridSystem.GetWidth();
+    public int GetHeight()=> gridSystem.GetHeight();
+    public float GetCellSize()=>gridSystem.GetCellSize();
 
 }

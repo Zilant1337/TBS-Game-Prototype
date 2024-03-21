@@ -10,7 +10,7 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private Animator unitAnimator;
     private float moveSpeed = 5.0f;
     private float stoppingDistance = 0.01f;
-    private float rotationSpeed = 13f;
+    private float rotationSpeed = 15f;
     [SerializeField] int maxMoveDistance=4;
     private Unit unit;
     // Update is called once per frame
@@ -67,7 +67,6 @@ public class MoveAction : MonoBehaviour
                 validGridPositionList.Add(testGridPosition);
             }
         }
-
         return validGridPositionList;
     }
 }

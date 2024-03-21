@@ -8,7 +8,7 @@ public class UnitActionSystem : MonoBehaviour
     public static UnitActionSystem Instance { get; private set; }
     public event EventHandler OnSelectedUnitChange;
     [SerializeField] private LayerMask unitLayerMask;
-    [SerializeField]private Unit selectedUnit;
+    [SerializeField] private Unit selectedUnit;
     private void Awake()
     {
         if (Instance != null)

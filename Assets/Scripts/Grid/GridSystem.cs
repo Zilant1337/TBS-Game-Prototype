@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,5 +51,21 @@ public class GridSystem
     public bool IsValidGridPosition(GridPosition pos)
     {
         return pos.x >= 0 && pos.x < width & pos.z >= 0 && pos.z < height;
+    }
+    public Tuple<int,int> GetGridSize()
+    {
+        return new Tuple<int,int> (width,height);
+    }
+    public int GetWidth()
+    {
+        return width;
+    }
+    public int GetHeight()
+    {
+        return height;
+    }
+    public float GetCellSize()
+    {
+        return cellSize;
     }
 }
