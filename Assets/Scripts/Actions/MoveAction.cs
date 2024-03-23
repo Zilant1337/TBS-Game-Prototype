@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
 
     private Vector3 targetPosition;
@@ -12,30 +13,36 @@ public class MoveAction : MonoBehaviour
     private float stoppingDistance = 0.01f;
     private float rotationSpeed = 15f;
     [SerializeField] int maxMoveDistance=4;
-    private Unit unit;
     // Update is called once per frame
-    private void Awake()
+    protected override void Awake()
     {
-        unit=GetComponent<Unit>();
+        base.Awake();
         targetPosition = transform.position;
     }
     void Update()
     {
+        if (!isActive)
+            return;
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
             transform.position += moveDirection * Time.deltaTime * moveSpeed;
             unitAnimator.SetBool("IsWalking", true);
         }
         else
         {
             unitAnimator.SetBool("IsWalking", false);
+            isActive = false;
+            onActionComplete();
         }
+
+        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
-    public void Move(GridPosition targetPosition)
+    public void Move(GridPosition targetPosition, Action onMoveComplete)
     {
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(targetPosition);
+        isActive = true;
+        this.onActionComplete = onMoveComplete;
     }
     public bool IsValidActionGridPosition(GridPosition gridPosition)
     {
@@ -68,5 +75,9 @@ public class MoveAction : MonoBehaviour
             }
         }
         return validGridPositionList;
+    }
+    public override string GetActionName()
+    {
+        return "Move";
     }
 }
