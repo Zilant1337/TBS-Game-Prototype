@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2931295895548953153}
   - component: {fileID: 1884543349881813324}
   - component: {fileID: 3917584077677217820}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: SelectedVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

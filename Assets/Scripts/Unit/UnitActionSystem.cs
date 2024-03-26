@@ -8,8 +8,12 @@ using UnityEngine.EventSystems;
 public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set; }
+
     public event EventHandler OnSelectedUnitChange;
     public event EventHandler OnSelectedActionChange;
+    public event EventHandler<bool> OnBusyChange;
+    public event EventHandler OnAPSpent;
+
     private bool isBusy; 
     [SerializeField] private LayerMask unitLayerMask;
     [SerializeField] private Unit selectedUnit;
@@ -53,24 +57,13 @@ public class UnitActionSystem : MonoBehaviour
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetMousePosition());
 
-            if (selectedAction.IsValidGridPosition(mouseGridPosition))
+            if (selectedAction.IsValidGridPosition(mouseGridPosition)&& selectedUnit.TryDeductAP(selectedAction))
             {
+
                 SetBusy();
                 selectedAction.TakeAction(mouseGridPosition, ClearBusy);
-
+                OnAPSpent?.Invoke(this,EventArgs.Empty);
             }
-            /*switch (selectedAction)
-            {
-                case MoveAction moveAction:
-                    SetBusy();
-                    moveAction.TakeAction(mouseGridPosition, ClearBusy);
-                    break;
-                case SpinAction spinAction:
-                    SetBusy();
-                    spinAction.TakeAction(mouseGridPosition, ClearBusy);
-                    break;
-            }*/
-
         }
     }
     private bool TryHandleUnitSelection()
@@ -115,10 +108,12 @@ public class UnitActionSystem : MonoBehaviour
     private void SetBusy()
     {
         isBusy = true;
+        OnBusyChange?.Invoke(this, isBusy);
     }
     private void ClearBusy()
     {
         isBusy=false;
+        OnBusyChange?.Invoke(this, isBusy);
     }
     public Unit GetSelectedUnit()
     {

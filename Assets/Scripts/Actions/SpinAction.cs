@@ -7,7 +7,11 @@ public class SpinAction : BaseAction
 {
     private float spinAmount;
     private float totalSpinAmount;
-
+    private void Awake()
+    {
+        base.Awake();
+        actionPointCost = 1;
+    }
     private void Update()
     {
         if (!isActive)
@@ -41,4 +45,5 @@ public class SpinAction : BaseAction
     {
         return "Spin";
     }
+    
 }

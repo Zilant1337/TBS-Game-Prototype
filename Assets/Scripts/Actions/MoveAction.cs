@@ -18,6 +18,7 @@ public class MoveAction : BaseAction
     {
         base.Awake();
         targetPosition = transform.position;
+        actionPointCost = 1;
     }
     void Update()
     {
@@ -75,4 +76,8 @@ public class MoveAction : BaseAction
     {
         return "Move";
     }
+    /*public override int GetActionPointCost()
+    {
+        throw new NotImplementedException();
+    }*/
 }
