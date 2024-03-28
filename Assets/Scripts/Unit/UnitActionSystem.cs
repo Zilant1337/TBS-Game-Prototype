@@ -39,6 +39,10 @@ public class UnitActionSystem : MonoBehaviour
         {
             return;
         }
+        if (!TurnSystem.Instance.GetIsPlayerTurn())
+        {
+            return ;
+        }
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -76,7 +80,7 @@ public class UnitActionSystem : MonoBehaviour
             {
                 if (raycastHit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
-                    if(unit!=selectedUnit)
+                    if(unit!=selectedUnit&&!unit.GetIsEnemy()   )
                     {
                         SetSelectedUnit(unit);
 

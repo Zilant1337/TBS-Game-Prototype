@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
 
     public static event EventHandler OnAnyAPChange;
 
+    [SerializeField] private bool isEnemy;
+
     private const int ACTION_POINTS_MAX = 2;
     private GridPosition gridPosition;
     private MoveAction moveAction;
@@ -82,11 +84,21 @@ public class Unit : MonoBehaviour
     }
     private void TurnSystem_OnTurnEnd(object sender, EventArgs e)
     {
+        if(!isEnemy&&TurnSystem.Instance.GetIsPlayerTurn()||isEnemy&&!TurnSystem.Instance.GetIsPlayerTurn())
         ResetAP();
+        
     }
     public void ResetAP()
     {
         actionPoints = ACTION_POINTS_MAX;
         OnAnyAPChange?.Invoke(this, EventArgs.Empty);
+    }
+    public bool GetIsEnemy()
+    {
+        return isEnemy;
+    }
+    public void SetIsEnemy(bool isEnemy)
+    {
+        this.isEnemy = isEnemy;
     }
 }
