@@ -20,26 +20,22 @@ public class SpinAction : BaseAction
         spinAmount = 360f * Time.deltaTime;
         totalSpinAmount +=spinAmount;
         transform.eulerAngles += new Vector3(0, spinAmount, 0);
-        if (totalSpinAmount > 360f)
+        if (totalSpinAmount >= 360f)
         {
-            isActive = false;
-            onActionComplete();
-            totalSpinAmount = 0;
+            base.ActionComplete();
         }
         
     }
     public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetGridPosition();
-        validGridPositionList.Add(unitGridPosition);
-        return validGridPositionList;
+        return new List<GridPosition>{ unitGridPosition};
     }
     public override void TakeAction(GridPosition gridPosition,Action onSpinComplete)
-    {   
+    {
+        base.ActionStart(onSpinComplete);
         totalSpinAmount =0;
-        isActive = true;
-        this.onActionComplete = onSpinComplete;
+        
     }
     public override string GetActionName()
     {

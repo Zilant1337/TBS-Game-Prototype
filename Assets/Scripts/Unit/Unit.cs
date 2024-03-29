@@ -44,6 +44,10 @@ public class Unit : MonoBehaviour
     {
         return gridPosition;
     }
+    public Vector3 GetWorldPosition()
+    {
+        return transform.position;
+    }
     public MoveAction GetMoveAction()
     {
         return moveAction;
@@ -100,5 +104,9 @@ public class Unit : MonoBehaviour
     public void SetIsEnemy(bool isEnemy)
     {
         this.isEnemy = isEnemy;
+    }
+    public void Damage()
+    {
+        Debug.Log(transform+ " Damaged");
     }
 }
