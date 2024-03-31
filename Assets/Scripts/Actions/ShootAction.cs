@@ -11,6 +11,16 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShoot;
     private float rotationSpeed = 15f;
+    public event EventHandler<OnShootEventArgs> OnShoot;
+    private int shotAmount = 3;
+    private float fireDelay =0.1f;
+    private float timer = 0;
+
+    public class OnShootEventArgs : EventArgs
+    {
+        public Unit targetUnit;
+        public Unit shootingUnit;
+    }
 
     private enum State
     {
@@ -36,7 +46,20 @@ public class ShootAction : BaseAction
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
                 break;
             case State.Shooting:
-                if (canShoot) Shoot();
+                if (canShoot&&timer>fireDelay) 
+                { 
+                    Shoot();
+                    OnShoot?.Invoke(this,new OnShootEventArgs { targetUnit=targetUnit,shootingUnit=unit});
+                    shotAmount--;
+                    timer = 0;
+                }
+                if (shotAmount == 0)
+                {
+                    canShoot = false;
+                    shotAmount = 3;
+                    timer = 0;
+                }
+                timer += Time.deltaTime;
                 break;
             case State.Finishing:
                 break;
@@ -55,7 +78,7 @@ public class ShootAction : BaseAction
             case State.Aiming:
                 {
                     state = State.Shooting;
-                    float shootingStateTime = 0.1f;
+                    float shootingStateTime = 2f;
                     stateTimer = shootingStateTime;
                 }
                 break;
