@@ -6,15 +6,20 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
+    private const int SHOTS_PER_ACTION = 3;
+    private const int DAMAGE_PER_SHOT = 20;
+
     private int maxShootDistance=7;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShoot;
     private float rotationSpeed = 15f;
     public event EventHandler<OnShootEventArgs> OnShoot;
-    private int shotAmount = 3;
-    private float fireDelay =0.1f;
+    private int shotsPerAction = SHOTS_PER_ACTION;
+    private int damagePerShot = DAMAGE_PER_SHOT;
+    private float fireDelay =0.2f;
     private float timer = 0;
+    
 
     public class OnShootEventArgs : EventArgs
     {
@@ -46,17 +51,24 @@ public class ShootAction : BaseAction
                 transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
                 break;
             case State.Shooting:
-                if (canShoot&&timer>fireDelay) 
-                { 
-                    Shoot();
-                    OnShoot?.Invoke(this,new OnShootEventArgs { targetUnit=targetUnit,shootingUnit=unit});
-                    shotAmount--;
-                    timer = 0;
-                }
-                if (shotAmount == 0)
+                if (targetUnit == null)
                 {
                     canShoot = false;
-                    shotAmount = 3;
+                    shotsPerAction = SHOTS_PER_ACTION;
+                    timer = 0;
+                }
+                if (canShoot&&timer>fireDelay) 
+                {
+                    
+                    Shoot();
+                    OnShoot?.Invoke(this,new OnShootEventArgs { targetUnit=targetUnit,shootingUnit=unit});
+                    shotsPerAction--;
+                    timer = 0;
+                }
+                if (shotsPerAction == 0)
+                {
+                    canShoot = false;
+                    shotsPerAction = SHOTS_PER_ACTION;
                     timer = 0;
                 }
                 timer += Time.deltaTime;
@@ -99,7 +111,7 @@ public class ShootAction : BaseAction
     }
     private void Shoot()
     {
-        targetUnit.Damage();
+        targetUnit.Damage(damagePerShot);
     }
     public override void TakeAction(GridPosition gridPosition, Action onShootComplete)
     {

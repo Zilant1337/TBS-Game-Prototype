@@ -27,7 +27,6 @@ public class TurnSystemUI : MonoBehaviour
     private void UpdateEnemyTurnVisual()
     {
         enemyTurnVisual.SetActive(!TurnSystem.Instance.GetIsPlayerTurn());
-        Debug.Log(TurnSystem.Instance.GetIsPlayerTurn());
         UpdateEndTurnButtonVisual();
     }
     private void Unit_OnAnyAPChange(object sender, EventArgs e)

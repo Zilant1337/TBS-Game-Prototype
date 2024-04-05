@@ -10,7 +10,6 @@ public class BulletProjectile : MonoBehaviour
     public void Setup(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
-        Debug.Log($"Target: {targetPosition}");
     }
     private void Update()
     {
