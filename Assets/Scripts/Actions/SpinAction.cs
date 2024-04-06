@@ -33,9 +33,9 @@ public class SpinAction : BaseAction
     }
     public override void TakeAction(GridPosition gridPosition,Action onSpinComplete)
     {
-        base.ActionStart(onSpinComplete);
         totalSpinAmount =0;
-        
+        base.ActionStart(onSpinComplete);
+
     }
     public override string GetActionName()
     {

@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
         gridPosition = LevelGrid.Instance.GetGridPosition(this.transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition,this);
         TurnSystem.Instance.OnTurnEnd +=TurnSystem_OnTurnEnd;
-        healthSystem.OnDead += HealthSystem_OnDead;
+        healthSystem.OnDeath += HealthSystem_OnDead;
 
     }
     private void Update()
@@ -39,8 +39,9 @@ public class Unit : MonoBehaviour
         var newGridPosition = LevelGrid.Instance.GetGridPosition(this.transform.position);
         if (newGridPosition != gridPosition)
         {
-            LevelGrid.Instance.UnitMovedGridPosition(this,gridPosition,newGridPosition);
-            gridPosition = newGridPosition; 
+            GridPosition oldGridPosition=gridPosition;
+            gridPosition = newGridPosition;
+            LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, gridPosition); 
         }
     }
     public GridPosition GetGridPosition()

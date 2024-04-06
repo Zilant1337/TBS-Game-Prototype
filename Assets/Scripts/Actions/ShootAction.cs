@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    private const int SHOTS_PER_ACTION = 3;
+    private const int SHOTS_PER_ACTION = 6;
     private const int DAMAGE_PER_SHOT = 20;
 
     private int maxShootDistance=7;
@@ -115,13 +115,13 @@ public class ShootAction : BaseAction
     }
     public override void TakeAction(GridPosition gridPosition, Action onShootComplete)
     {
-        base.ActionStart(onShootComplete);
         targetUnit =LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
-        float aimingStateTime = 1f;
+        float aimingStateTime = 0.5f;
         stateTimer = aimingStateTime;
         canShoot = true;
+        base.ActionStart(onShootComplete);
     }
     public override string GetActionName()
     {
@@ -163,5 +163,13 @@ public class ShootAction : BaseAction
             }
         }
         return validGridPositionList;
+    }
+    public Unit GetTargetUnit()
+    {
+        return targetUnit;
+    }
+    public int GetMaxShootDistance()
+    {
+        return maxShootDistance;
     }
 }

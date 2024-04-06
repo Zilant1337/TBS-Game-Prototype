@@ -7,7 +7,8 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private int health;
     [SerializeField]private int healthMax = 100;
-    public event EventHandler OnDead;
+    public event EventHandler OnDeath;
+    public static event EventHandler OnAnyDeath;
     public event EventHandler OnDamaged;
     private void Awake()
     {
@@ -30,7 +31,8 @@ public class HealthSystem : MonoBehaviour
     }
     private void Die()
     {
-        OnDead?.Invoke(this, EventArgs.Empty);
+        OnDeath?.Invoke(this, EventArgs.Empty);
+        OnAnyDeath?.Invoke(this, EventArgs.Empty);
     }
     public float GetHPNormalized()
     {

@@ -11,7 +11,7 @@ public class UnitRagdollSpawner : MonoBehaviour
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
-        healthSystem.OnDead += HealthSystem_OnDead;
+        healthSystem.OnDeath += HealthSystem_OnDead;
     }
     private void HealthSystem_OnDead(object sender, EventArgs e)
     {
