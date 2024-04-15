@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     }
     private State currentState; 
     private float timer;
-    private const float TIMER_DEFAULT_VALUE=5;
+    private const float TIMER_DEFAULT_VALUE=0.5f;
     // Update is called once per frame
     private void Awake()
     {
@@ -69,7 +69,6 @@ public class EnemyAI : MonoBehaviour
     }
     private bool TryTakeEnemyAIAction(Action onEnemyAIActionComplete)
     {
-        Debug.Log("Take Enemy AI Action");
         foreach(Unit enemyUnit in UnitManager.Instance.GetEnemyUnitList())
         {
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete)) 
@@ -77,26 +76,43 @@ public class EnemyAI : MonoBehaviour
         }
         return false;
     }
-    private bool TryTakeEnemyAIAction(Unit enemyUnit,Action onEnemyAIActionComplete)
+    private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
-        SpinAction spinAction = enemyUnit.GetSpinAction();
-        while (enemyUnit.GetAP() > 0)
+        EnemyAIAction bestEnemyAIAction = null;
+        BaseAction bestBaseAction = null;
+        foreach (var baseAction in enemyUnit.GetBaseActionArray())
         {
-            GridPosition actionGridPosition = enemyUnit.GetGridPosition();
-
-            if (spinAction.IsValidGridPosition(actionGridPosition) && enemyUnit.TryDeductAP(spinAction))
+            if (enemyUnit.HasEnoughAPToAct(baseAction))
             {
-                Debug.Log($"You spin {enemyUnit} right round, baby, right round!");
-                spinAction.TakeAction(actionGridPosition, onEnemyAIActionComplete);
-                return true;
+                if (bestEnemyAIAction == null)
+                {
+                    bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    bestBaseAction = baseAction;
+                }
+                else
+                {
+                    EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
+                    {
+                        bestEnemyAIAction = testEnemyAIAction;
+                        bestBaseAction = baseAction;
+                    }
+                }
             }
             else
             {
-                return false;
+                continue;
             }
-            
         }
-        return false;  
+        if (bestEnemyAIAction!=null && enemyUnit.TryDeductAP(bestBaseAction))
+        {
+            bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition,onEnemyAIActionComplete);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

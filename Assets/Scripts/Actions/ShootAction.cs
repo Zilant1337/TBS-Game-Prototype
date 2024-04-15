@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    private const int SHOTS_PER_ACTION = 6;
+    private const int SHOTS_PER_ACTION = 3;
     private const int DAMAGE_PER_SHOT = 20;
 
     private int maxShootDistance=7;
@@ -129,8 +129,12 @@ public class ShootAction : BaseAction
     }
     public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetGridPosition();
+        return GetValidActionGridPositionList(unitGridPosition);
+    }
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition unitGridPosition)
+    {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
         for (int x = -maxShootDistance; x <= maxShootDistance; x++)
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
@@ -171,5 +175,19 @@ public class ShootAction : BaseAction
     public int GetMaxShootDistance()
     {
         return maxShootDistance;
+    }
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    {
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        float hpNormalized = targetUnit.GetHealthNormalized();
+        return new EnemyAIAction
+        {
+            gridPosition = gridPosition,
+            actionValue = 100+ Mathf.RoundToInt((1-hpNormalized)*100f),
+        };
+    }
+    public int GetTargetCountAtPosition(GridPosition gridPosition)
+    {
+        return GetValidActionGridPositionList(gridPosition).Count;
     }
 }

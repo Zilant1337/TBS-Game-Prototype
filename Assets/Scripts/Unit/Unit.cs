@@ -16,15 +16,11 @@ public class Unit : MonoBehaviour
 
     private const int ACTION_POINTS_MAX = 2;
     private GridPosition gridPosition;
-    private MoveAction moveAction;
-    private SpinAction spinAction;
     private BaseAction[] baseActionArray;
     private HealthSystem healthSystem;
     private int actionPoints = ACTION_POINTS_MAX;
     private void Awake()
     {
-        moveAction = GetComponent<MoveAction>();
-        spinAction = GetComponent<SpinAction>();
         baseActionArray =GetComponents<BaseAction>();
         healthSystem = GetComponent<HealthSystem>();
     }
@@ -57,17 +53,20 @@ public class Unit : MonoBehaviour
     {
         return transform.position;
     }
-    public MoveAction GetMoveAction()
+    public T GetAction<T> () where T : BaseAction
     {
-        return moveAction;
-    }    
+        foreach(var action in baseActionArray)
+        {
+            if(action is T)
+            {
+                return (T)action;
+            }
+        }
+        return null;
+    } 
     public override string ToString()
     {
         return this.name;
-    }
-    public SpinAction GetSpinAction()
-    {
-        return spinAction;
     }
     public BaseAction[] GetBaseActionArray()
     {
@@ -124,4 +123,6 @@ public class Unit : MonoBehaviour
     {
         healthSystem.Damage(damageDealt);
     }
+    public float GetHealthNormalized()=> healthSystem.GetHPNormalized();
+    
 }

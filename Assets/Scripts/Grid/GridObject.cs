@@ -5,9 +5,9 @@ using UnityEngine;
 public class GridObject 
 {
     private GridPosition gridPosition;
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
     private List<Unit> unitList;
-    public GridObject(GridSystem gridSystem, GridPosition gridPosition)
+    public GridObject(GridSystem<GridObject> gridSystem, GridPosition gridPosition)
     {
         this.gridSystem = gridSystem;
         this.gridPosition = gridPosition;
