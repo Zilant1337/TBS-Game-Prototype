@@ -11,8 +11,10 @@ public class Testing : MonoBehaviour
     }
     private void Update()
     {
-        /*GridSystemVisual.Instance.HideAllGridVisuals();
-        GridSystemVisual.Instance.ShowGridPositionList(unit.GetMoveAction().GetValidActionGridPositionList());*/
+        /*if (Input.GetKeyDown(KeyCode.T))
+        {
+            
+        }*/
     }
 
 }

@@ -19,7 +19,8 @@ public class ShootAction : BaseAction
     private int damagePerShot = DAMAGE_PER_SHOT;
     private float fireDelay =0.2f;
     private float timer = 0;
-    
+
+    [SerializeField] private LayerMask obstaclesLayerMask;
 
     public class OnShootEventArgs : EventArgs
     {
@@ -160,6 +161,15 @@ public class ShootAction : BaseAction
                 }
                 int testDistance =Mathf.Abs(x)+Mathf.Abs(z);
                 if (testDistance > maxShootDistance)
+                {
+                    continue;
+                }
+                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDirection=(targetUnit.GetWorldPosition()- unitWorldPosition).normalized;
+                float unitShoulderHeight = 1.7f;
+                if(Physics.Raycast(unitWorldPosition + Vector3.up*unitShoulderHeight, shootDirection,
+                    Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()), obstaclesLayerMask))
                 {
                     continue;
                 }
