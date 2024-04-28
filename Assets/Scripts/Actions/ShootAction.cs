@@ -9,12 +9,15 @@ public class ShootAction : BaseAction
     private const int SHOTS_PER_ACTION = 3;
     private const int DAMAGE_PER_SHOT = 20;
 
+    public event EventHandler<OnShootEventArgs> OnShoot;
+    public static event EventHandler<OnShootEventArgs> OnAnyShoot;
+
     private int maxShootDistance=7;
     private float stateTimer;
     private Unit targetUnit;
     private bool canShoot;
     private float rotationSpeed = 15f;
-    public event EventHandler<OnShootEventArgs> OnShoot;
+    
     private int shotsPerAction = SHOTS_PER_ACTION;
     private int damagePerShot = DAMAGE_PER_SHOT;
     private float fireDelay =0.2f;
@@ -112,6 +115,17 @@ public class ShootAction : BaseAction
     }
     private void Shoot()
     {
+        OnAnyShoot?.Invoke(this, new OnShootEventArgs
+        {
+            targetUnit = targetUnit,
+            shootingUnit = unit
+        }) ;
+
+        OnShoot?.Invoke(this, new OnShootEventArgs
+        {
+            targetUnit = targetUnit,
+            shootingUnit = unit
+        }) ;
         targetUnit.Damage(damagePerShot);
     }
     public override void TakeAction(GridPosition gridPosition, Action onShootComplete)
