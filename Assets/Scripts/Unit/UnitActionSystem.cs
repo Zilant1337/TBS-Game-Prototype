@@ -63,7 +63,6 @@ public class UnitActionSystem : MonoBehaviour
 
             if (selectedAction.IsValidGridPosition(mouseGridPosition)&& selectedUnit.TryDeductAP(selectedAction))
             {
-
                 SetBusy();
                 selectedAction.TakeAction(mouseGridPosition, ClearBusy);
                 OnAPSpent?.Invoke(this,EventArgs.Empty);

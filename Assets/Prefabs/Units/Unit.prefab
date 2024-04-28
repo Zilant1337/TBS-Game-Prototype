@@ -399,6 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81931e48c7dcfab42846f63e5b4554e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grenadeProjectilePrefabTransform: {fileID: 7170395204841072793, guid: fac8d587cab9b9e4ba378f4b46d8b4fd,
+    type: 3}
 --- !u!114 &3347868905668782676
 MonoBehaviour:
   m_ObjectHideFlags: 0
