@@ -91,6 +91,24 @@ public class GridSystemVisual : MonoBehaviour
         }
         ShowGridPositionList(gridPositionList, gridVisualType);
     }
+    private void ShowGridPositionRangeWithDiagonals(GridPosition gridPosition, int range, GridVisualType gridVisualType)
+    {
+        List<GridPosition> gridPositionList = new List<GridPosition>();
+        for (int x = -range; x <= range; x++)
+        {
+            for (int z = -range; z <= range; z++)
+            {
+                GridPosition testGridPosition = gridPosition + new GridPosition(x, z);
+
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                {
+                    continue;
+                }
+                gridPositionList.Add(testGridPosition);
+            }
+        }
+        ShowGridPositionList(gridPositionList, gridVisualType);
+    }
     public void ShowGridPositionList(List<GridPosition> gridPositions, GridVisualType gridVisualType)
     {
         foreach (var gridPosition in gridPositions)
@@ -118,6 +136,13 @@ public class GridSystemVisual : MonoBehaviour
                 break;
             case SpinAction spinAction:
                 gridVisualType = GridVisualType.Green;
+                break;
+            case SwordAction swordAction:
+                gridVisualType = GridVisualType.Red;
+                ShowGridPositionRangeWithDiagonals(selectedUnit.GetGridPosition(), swordAction.GetMaxAttackDistance(), GridVisualType.LightRed);
+                break;
+            case GrenadeAction grenadeAction:
+                gridVisualType = GridVisualType.Red;
                 break;
 
         }
