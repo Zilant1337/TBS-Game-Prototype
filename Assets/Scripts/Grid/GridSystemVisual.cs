@@ -14,7 +14,7 @@ public class GridSystemVisual : MonoBehaviour
     }
     public enum GridVisualType
     {
-        White,Blue,Red,LightRed,Yellow,Green
+        White,Blue,LightBlue,Red,LightRed,Yellow,LightYellow,Green,LightGreen
     }
     
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
@@ -143,6 +143,10 @@ public class GridSystemVisual : MonoBehaviour
                 break;
             case GrenadeAction grenadeAction:
                 gridVisualType = GridVisualType.Red;
+                break;
+            case InteractAction interactAction:
+                gridVisualType = GridVisualType.Blue;
+                ShowGridPositionRangeWithDiagonals(selectedUnit.GetGridPosition(), interactAction.GetMaxInteractDistance(), GridVisualType.LightBlue);
                 break;
 
         }

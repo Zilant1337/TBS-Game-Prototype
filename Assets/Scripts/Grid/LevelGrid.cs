@@ -58,6 +58,16 @@ public class LevelGrid : MonoBehaviour
         AddUnitAtGridPosition(newGridPosition, unit);
         OnAnyUnitMovedGridPosition?.Invoke(this,EventArgs.Empty);
     }
+    public Door GetDoorAtGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject=gridSystem.GetGridObject(gridPosition);
+        return gridObject.GetDoor();
+    }
+    public void SetDoorAtGridPosition(GridPosition gridPosition, Door door)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        gridObject.SetDoor(door);
+    }
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
     public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
     public bool IsValidGridPosition(GridPosition pos)=> gridSystem.IsValidGridPosition(pos);
