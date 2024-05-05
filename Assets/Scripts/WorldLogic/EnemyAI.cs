@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     }
     private State currentState; 
     private float timer;
-    private const float TIMER_DEFAULT_VALUE=0.5f;
+    private const float TIMER_DEFAULT_VALUE=1f;
     // Update is called once per frame
     private void Awake()
     {

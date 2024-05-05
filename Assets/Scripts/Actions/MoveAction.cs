@@ -114,13 +114,22 @@ public class MoveAction : BaseAction
     }
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        Debug.Log($"my unit is {unit}");
         int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
-
+        List<GridPosition> grenadeThrowOptions = unit.GetAction<GrenadeAction>().GetValidActionGridPositionList();
+        int maxEnemiesHit =0;
+        foreach (GridPosition gridPos in grenadeThrowOptions)
+        {
+            int enemiesHit= unit.GetAction<GrenadeAction>().GetHitEnemyCount(gridPos);
+            if (enemiesHit > maxEnemiesHit)
+            {
+                maxEnemiesHit= enemiesHit;
+            }
+        }
+        
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
-            actionValue = targetCountAtGridPosition * 10,
+            actionValue = targetCountAtGridPosition * 10+ maxEnemiesHit * 5,
         };
     }
 }

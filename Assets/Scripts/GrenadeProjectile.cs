@@ -16,6 +16,7 @@ public class GrenadeProjectile : MonoBehaviour
     private float moveSpeed= 15f;
     private float reachedTargetDistance =0.2f;
     private int damage=30;
+    private float gridCellExplosionRadius;
 
     [SerializeField] private Transform grenadeExplosionVFXPrefabTransform;
     [SerializeField] private TrailRenderer trailRenderer;
@@ -39,7 +40,6 @@ public class GrenadeProjectile : MonoBehaviour
 
         if (Vector3.Distance(posXZ, targetPosition) < reachedTargetDistance)
         {
-            int gridCellExplosionRadius=2;
             Collider[] colliderArray=Physics.OverlapSphere(targetPosition, gridCellExplosionRadius * LevelGrid.Instance.GetCellSize());
 
             foreach (Collider collider in colliderArray)
@@ -60,9 +60,9 @@ public class GrenadeProjectile : MonoBehaviour
             onGrenadeActionComplete();
         }
     }
-    public void Setup(GridPosition targetGridPosition, Action onGrenadeActionComplete)
+    public void Setup(GridPosition targetGridPosition,float gridCellExplosionRadius, Action onGrenadeActionComplete)
     {
-
+        this.gridCellExplosionRadius = gridCellExplosionRadius;
         this.onGrenadeActionComplete = onGrenadeActionComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(targetGridPosition);
 
