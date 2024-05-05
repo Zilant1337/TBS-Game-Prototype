@@ -6,7 +6,11 @@ using UnityEngine;
 public class InteractAction : BaseAction
 {
     private int maxInteractDistance=1;
-
+    private void Awake()
+    {
+        base.Awake();
+        actionPointCost = 1;
+    }
     private void Update()
     {
         if (!isActive)
