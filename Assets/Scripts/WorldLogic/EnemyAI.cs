@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,8 +69,10 @@ public class EnemyAI : MonoBehaviour
     }
     private bool TryTakeEnemyAIAction(Action onEnemyAIActionComplete)
     {
+        //Проходится по всем юнитам, подконтрольным противнику
         foreach(Unit enemyUnit in UnitManager.Instance.GetEnemyUnitList())
         {
+            //Проверяется может ли юнит может выполнить действие.
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIActionComplete)) 
                 return true;
         }
@@ -78,17 +80,22 @@ public class EnemyAI : MonoBehaviour
     }
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
+        //Задаются параметры (Действие, его ценность и клетка, при применении действия на которой она достигается), по которым мы выберем действие с наибольшей ценностью
         EnemyAIAction bestEnemyAIAction = null;
         BaseAction bestBaseAction = null;
+        //В цикле проходится по всем доступным данному юниту действиям
         foreach (var baseAction in enemyUnit.GetBaseActionArray())
         {
+            //Проверяется достаточно ли у юнита очков действия
             if (enemyUnit.HasEnoughAPToAct(baseAction))
             {
+                //Если ещё нет значений в параметрах, они записываются
                 if (bestEnemyAIAction == null)
                 {
                     bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
                     bestBaseAction = baseAction;
                 }
+                //Если же параметры уже имеют значения, то в случае высшей чем в записанных параметрах ценности действия, перезаписываем параметры
                 else
                 {
                     EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
@@ -104,6 +111,7 @@ public class EnemyAI : MonoBehaviour
                 continue;
             }
         }
+        //Если есть действие, которое мы можем совершить, вычитаем у юнита нужное количество очков действия и выполняем его на клетку, где ценность действия максимальна
         if (bestEnemyAIAction!=null && enemyUnit.TryDeductAP(bestBaseAction))
         {
             bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition,onEnemyAIActionComplete);

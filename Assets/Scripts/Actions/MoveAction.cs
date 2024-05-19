@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -114,9 +114,12 @@ public class MoveAction : BaseAction
     }
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
+        //Параметр, указывающий на количество противников по которым может пострелять юнит, если перейдёт на заданную клетку
         int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
+        //Список всех клеток, куда юнит может кинуть гранату
         List<GridPosition> grenadeThrowOptions = unit.GetAction<GrenadeAction>().GetValidActionGridPositionList();
         int maxEnemiesHit =0;
+        //Поиск максимального количества врагов, которых юнит сможет задеть броском гранаты
         foreach (GridPosition gridPos in grenadeThrowOptions)
         {
             int enemiesHit= unit.GetAction<GrenadeAction>().GetHitEnemyCount(gridPos);
@@ -125,7 +128,7 @@ public class MoveAction : BaseAction
                 maxEnemiesHit= enemiesHit;
             }
         }
-        
+        //Расчёт ценности приоритизирует выстрелы выше бросков гранат в угоду игровому балансу
         return new EnemyAIAction
         {
             gridPosition = gridPosition,

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +9,7 @@ public class GrenadeAction : BaseAction
     [SerializeField] private Transform grenadeProjectilePrefabTransform;
     [SerializeField] private LayerMask obstaclesLayerMask;
     private int maxThrowDistance = 5;
-    private float gridCellExplosionRadius = 2;
+    private float gridCellExplosionRadius = 1.5f;
     private void Awake()
     {
         base.Awake();
@@ -111,6 +111,7 @@ public class GrenadeAction : BaseAction
     }
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
+        //В качестве параметров используется количество дружественных юнитов и юнитов противника, которых задел бы бросок в эту клетку
         int EnemyHurtCount = GetHitEnemyCount(gridPosition);
         int FriendlyHurtCount = GetHitFriendlyCount(gridPosition);
         return new EnemyAIAction

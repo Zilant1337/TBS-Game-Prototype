@@ -9,7 +9,7 @@ public class InteractAction : BaseAction
     private void Awake()
     {
         base.Awake();
-        actionPointCost = 1;
+        actionPointCost = 0;
     }
     private void Update()
     {

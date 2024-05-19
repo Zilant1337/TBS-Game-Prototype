@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.UIElements;
+
 using UnityEngine;
 
 public class GrenadeProjectile : MonoBehaviour
@@ -15,7 +13,7 @@ public class GrenadeProjectile : MonoBehaviour
 
     private float moveSpeed= 15f;
     private float reachedTargetDistance =0.2f;
-    private int damage=30;
+    private int damage=40;
     private float gridCellExplosionRadius;
 
     [SerializeField] private Transform grenadeExplosionVFXPrefabTransform;

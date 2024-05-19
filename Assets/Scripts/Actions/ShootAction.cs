@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,7 +7,7 @@ using UnityEngine;
 public class ShootAction : BaseAction
 {
     private const int SHOTS_PER_ACTION = 3;
-    private const int DAMAGE_PER_SHOT = 20;
+    private const int DAMAGE_PER_SHOT = 30;
 
     public event EventHandler<OnShootEventArgs> OnShoot;
     public static event EventHandler<OnShootEventArgs> OnAnyShoot;
@@ -203,10 +203,12 @@ public class ShootAction : BaseAction
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+        //В качестве параметра для расчётов используется процент оставшегося здоровья у противника на данной клетке
         float hpNormalized = targetUnit.GetHealthNormalized();
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
+            //Расчёт цености сделан так, чтобы иметь приоритет выше перемещения, но при этом учитывать количества здоровья у противника. Чем ниже здоровье, тем выше ценность.
             actionValue = 100+ Mathf.RoundToInt((1-hpNormalized)*100f),
         };
     }
